@@ -5,6 +5,8 @@
 </head>
 <body>
 <h3>Hello World @@@</h3>
+<h3><a href="${pageContext.request.contextPath}/hello.jsp">Hello Page</a></h3>
+<h3><a href="${pageContext.request.contextPath}/person?action=list">person Page</a></h3>
 <hr>
 <table border="2">
     <c:forEach begin="1" end="10" var="i">
