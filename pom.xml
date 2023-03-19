@@ -12,9 +12,12 @@
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <querydsl.version>5.0.0</querydsl.version>
+        <hibernate.version>6.1.7.Final</hibernate.version>
+        <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
+<!--        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>-->
     </properties>
 
     <dependencies>
@@ -43,18 +46,60 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+           <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.1.7.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-hikaricp -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-hikaricp</artifactId>
-            <version>6.1.7.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.validation</groupId>-->
+<!--            <artifactId>jakarta.validation-api</artifactId>-->
+<!--            <version>3.0.2</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.annotation</groupId>-->
+<!--            <artifactId>jakarta.annotation-api</artifactId>-->
+<!--            <version>2.1.1</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.el</groupId>-->
+<!--            <artifactId>jakarta.el-api</artifactId>-->
+<!--            <version>5.0.1</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.sun.el/el-ri &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.sun.el</groupId>-->
+<!--            <artifactId>el-ri</artifactId>-->
+<!--            <version>3.0.4</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.glassfish/jakarta.el &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish</groupId>-->
+<!--            <artifactId>jakarta.el</artifactId>-->
+<!--            <version>5.0.0-M1</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.expressly</groupId>-->
+<!--            <artifactId>expressly</artifactId>-->
+<!--            <version>5.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>

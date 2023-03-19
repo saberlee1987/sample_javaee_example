@@ -11,18 +11,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @WebServlet(urlPatterns = {"/person", "/person/*"}, name = "personController", displayName = "personController")
 public class PersonController extends HttpServlet {
 
     private PersonService personService;
+    private Validator validator;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         personService = new PersonServiceImpl(new PersonRepositoryImpl());
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
     @Override
@@ -69,20 +77,15 @@ public class PersonController extends HttpServlet {
 
     }
 
-    private void addPerson(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        Integer age = Integer.parseInt(request.getParameter("age"));
-        String email = request.getParameter("email");
-        String nationalCode = request.getParameter("nationalCode");
-        String mobile = request.getParameter("mobile");
-        Person person = new Person();
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setAge(age);
-        person.setEmail(email);
-        person.setNationalCode(nationalCode);
-        person.setMobile(mobile);
+    private void addPerson(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Person person = getPersonFromRequest(request);
+        Set<ConstraintViolation<Person>> violations = validator.validate(person);
+        if (violations.size() > 0) {
+            request.setAttribute("violations", violations);
+            request.setAttribute("person", person);
+            showPersonData(request, response);
+            return;
+        }
         Boolean result = false;
         try {
             result = personService.save(person);
@@ -122,5 +125,25 @@ public class PersonController extends HttpServlet {
             id = Long.parseLong(requestURI);
         }
         return id;
+    }
+
+    private Person getPersonFromRequest(HttpServletRequest request) {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        Integer age = null;
+        if (request.getParameter("age") != null && request.getParameter("age").trim().length() > 0) {
+            age = Integer.parseInt(request.getParameter("age"));
+        }
+        String email = request.getParameter("email");
+        String nationalCode = request.getParameter("nationalCode");
+        String mobile = request.getParameter("mobile");
+        Person person = new Person();
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+        person.setAge(age);
+        person.setEmail(email);
+        person.setNationalCode(nationalCode);
+        person.setMobile(mobile);
+        return person;
     }
 }

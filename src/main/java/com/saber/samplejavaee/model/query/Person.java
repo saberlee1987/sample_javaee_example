@@ -1,7 +1,7 @@
 package com.saber.samplejavaee.model.query;
 
 import jakarta.persistence.*;
-
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,15 +12,27 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "firstName",length = 70)
+    @NotBlank(message = "firstName is Required")
     private String firstName;
     @Column(name = "lastName",length = 90)
+    @NotBlank(message = "lastName is Required")
     private String lastName;
     @Column(name = "age")
+    @NotNull(message = "age is Required")
+    @Positive(message = "age must be grate than 0")
     private Integer age;
     @Column(name = "email",length = 40)
+    @NotNull(message = "email is Required")
+    @Email(message = "email is invalid")
     private String email;
     @Column(name = "nationalCode",length = 10)
+    @NotBlank(message = "nationalCode is Required")
+    @Size(min = 10,max = 10,message = "nationalCode must be 10 digit")
+    @Pattern(regexp = "\\d{10}" ,message = "nationalCode invalid")
     private String nationalCode;
+    @NotBlank(message = "mobile is Required")
+    @Size(min = 11,max = 11,message = "mobile must be 11 digit")
+    @Pattern(regexp = "09[0-9]{9}" ,message = "mobile invalid")
     @Column(name = "mobile",length = 11)
     private String mobile;
 
